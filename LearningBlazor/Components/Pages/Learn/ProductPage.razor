@@ -1,0 +1,75 @@
+﻿@page "/product"
+
+<PageTitle>Product</PageTitle>
+
+<h1>Product Details</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group mb-3">
+            <label for="productName">Product Name:</label>
+            <input type="text" class="form-control" id="productName" @bind="product.Name" @bind:event="oninput" />
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="productPrice">Price ($):</label>
+            <input type="number" class="form-control" id="productPrice" @bind="product.Price" @bind:event="oninput" />
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="productQuantity">Quantity in Stock:</label>
+            <input type="number" class="form-control" id="productQuantity" @bind="product.QuantityInStock" @bind:event="oninput" />
+        </div>
+
+        <div class="form-check mb-3">
+            <input type="checkbox" class="form-check-input" id="productAvailable" @bind="product.IsAvailable" />
+            <label class="form-check-label" for="productAvailable">Available for Sale</label>
+        </div>
+
+        <button class="btn btn-primary" @onclick="ResetProduct">Reset</button>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h3>Product Summary</h3>
+            </div>
+            <div class="card-body">
+                <h4>@product.Name</h4>
+                <p>Price: $@product.Price.ToString("0.00")</p>
+                <p>In Stock: @product.QuantityInStock</p>
+                <p>Total Value: $@(product.Price * product.QuantityInStock).ToString("0.00")</p>
+                <p>Status: @(product.IsAvailable ? "Available" : "Not Available")</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private Product product = new Product
+        {
+            Name = "Sample Product",
+            Price = 19.99m,
+            QuantityInStock = 10,
+            IsAvailable = true
+        };
+
+    private void ResetProduct()
+    {
+        product = new Product
+            {
+                Name = "Sample Product",
+                Price = 19.99m,
+                QuantityInStock = 10,
+                IsAvailable = true
+            };
+    }
+
+    public class Product
+    {
+        public string Name { get; set; } = string.Empty;
+        public decimal Price { get; set; }
+        public int QuantityInStock { get; set; }
+        public bool IsAvailable { get; set; }
+    }
+}
