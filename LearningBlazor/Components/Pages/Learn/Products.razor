@@ -1,0 +1,74 @@
+﻿@page "/products"  
+
+<h3>Products</h3>  
+
+<div class="d-flex justify-content-evenly">
+
+    @foreach (var product in products)
+    {
+        <div class="card">
+            <div class="card-header">
+                <h3>Product Summary</h3>
+            </div>
+            <div class="card-body">
+                <h4>@product.Name</h4>
+                <p>Price: $@product.Price.ToString("0.00")</p>
+                <p>In Stock: @product.QuantityInStock</p>
+                <p>Total Value: $@(product.Price * product.QuantityInStock).ToString("F2")</p>
+                <p>Status: @(product.IsAvailable ? "Available" : "Not Available")</p>
+
+            </div>
+            <LearningBlazor.Components.Pages.Learn.LearnBlazorComponent._DeleteButtonComponent ProductId="@product.Id" OnProductDeleted="HandleProductDeleted">
+
+            </LearningBlazor.Components.Pages.Learn.LearnBlazorComponent._DeleteButtonComponent>
+        </div>
+    }
+
+</div>
+@code {
+
+    
+
+   private List<Models.Product> products = new()  
+   {  
+       new Models.Product  
+       {  
+           Id = 15,
+           Name = "Laptop",  
+           Price = 1200.99m,  
+           QuantityInStock = 10,  
+           IsAvailable = true,  
+           productProprieties = new List<Models.ProductPropriety>()  
+       },  
+       new Models.Product  
+       {  
+           Id=17,
+           Name = "Smartphone",  
+           Price = 799.49m,  
+           QuantityInStock = 25,  
+           IsAvailable = true,  
+           productProprieties = new List<Models.ProductPropriety>()  
+       },  
+       new Models.Product  
+       {  
+           Id=3,
+           Name = "Headphones",  
+           Price = 199.99m,  
+           QuantityInStock = 50,  
+           IsAvailable = true,  
+           productProprieties = new List<Models.ProductPropriety>()  
+       }  
+   };  
+
+    private void HandleProductDeleted((int id, bool isDeleted) productInfo)
+    {
+        if (productInfo.isDeleted)
+        {
+            var product = products.FirstOrDefault(x => x.Id == productInfo.id);
+            if (product != null)
+            {
+                products.Remove(product);
+            }
+        }
+    }
+}

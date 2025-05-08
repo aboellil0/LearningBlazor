@@ -25,7 +25,7 @@
             <input type="checkbox" class="form-check-input" id="productAvailable" @bind="product.IsAvailable" />
             <label class="form-check-label" for="productAvailable">Available for Sale</label>
         </div>
-        
+
 
         <div class="form-check mb-3">
             <select @bind="selectedProp">
@@ -102,7 +102,20 @@
                 Name = "Sample Product",
                 Price = 19.99m,
                 QuantityInStock = 10,
-                IsAvailable = true
+                IsAvailable = true,
+                productProprieties = new List<Models.ProductPropriety>()
+                {
+                new Models.ProductPropriety
+                {
+                    Name = "Color",
+                    Value = "Red"
+                },
+                new Models.ProductPropriety
+                {
+                    Name = "Size",
+                    Value = "Medium"
+                }
+                }
             };
     }
 
