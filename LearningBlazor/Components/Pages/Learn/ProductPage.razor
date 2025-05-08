@@ -20,10 +20,20 @@
             <label for="productQuantity">Quantity in Stock:</label>
             <input type="number" class="form-control" id="productQuantity" @bind="product.QuantityInStock" @bind:event="oninput" />
         </div>
-
+        
         <div class="form-check mb-3">
             <input type="checkbox" class="form-check-input" id="productAvailable" @bind="product.IsAvailable" />
             <label class="form-check-label" for="productAvailable">Available for Sale</label>
+        </div>
+        
+
+        <div class="form-check mb-3">
+            <select @bind="selectedProp">
+                @foreach(var prop in product.productProprieties)
+                {
+                    <option value="@prop.Name">@prop.Name: @prop.Value</option>
+                }
+            </select>
         </div>
 
         <button class="btn btn-primary" @onclick="ResetProduct">Reset</button>
@@ -38,25 +48,56 @@
                 <h4>@product.Name</h4>
                 <p>Price: $@product.Price.ToString("0.00")</p>
                 <p>In Stock: @product.QuantityInStock</p>
-                <p>Total Value: $@(product.Price * product.QuantityInStock).ToString("0.00")</p>
+                <p>Total Value: $@(product.Price * product.QuantityInStock).ToString("F2")</p>  
                 <p>Status: @(product.IsAvailable ? "Available" : "Not Available")</p>
+                @if (selectedProp != ""){
+                    <p>Selected Properity: @selectedProp</p>
+                    }
+
             </div>
         </div>
+    </div>
+
+    <div class="mt-3">
+        <h3>Product Properties</h3>
+        <ul class="list-group">
+            @foreach (var prop in product.productProprieties)
+            {
+                <li class="list-group-item">
+                    <strong>@prop.Name:</strong> @prop.Value
+                </li>
+            }
+        </ul>
     </div>
 </div>
 
 @code {
-    private Product product = new Product
+    private string selectedProp = "";
+
+    private Models.Product product = new()
         {
             Name = "Sample Product",
             Price = 19.99m,
             QuantityInStock = 10,
-            IsAvailable = true
+            IsAvailable = true,
+            productProprieties = new List<Models.ProductPropriety>()
+            {
+                new Models.ProductPropriety
+                {
+                    Name = "Color",
+                    Value = "Red"
+                },
+                new Models.ProductPropriety
+                {
+                    Name = "Size",
+                    Value = "Medium"
+                }
+            }
         };
 
     private void ResetProduct()
     {
-        product = new Product
+        product = new ()
             {
                 Name = "Sample Product",
                 Price = 19.99m,
@@ -65,11 +106,4 @@
             };
     }
 
-    public class Product
-    {
-        public string Name { get; set; } = string.Empty;
-        public decimal Price { get; set; }
-        public int QuantityInStock { get; set; }
-        public bool IsAvailable { get; set; }
-    }
 }
