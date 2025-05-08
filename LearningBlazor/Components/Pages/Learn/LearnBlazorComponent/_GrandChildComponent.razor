@@ -1,0 +1,13 @@
+﻿
+<div class="mt-4">
+        <p class="alert alert-danger">@messageForGrandChildComp</p>
+        <p class="alert alert-dismissible">@Luckynumber</p>
+   
+</div>
+@code {
+    [CascadingParameter(Name = "message")]
+    public string messageForGrandChildComp { get; set; }
+
+    [CascadingParameter(Name = "luckyNumber")]
+    public string Luckynumber { get; set; }
+}

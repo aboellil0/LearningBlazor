@@ -1,0 +1,19 @@
+﻿@page "/parent"
+
+<h3>Parent</h3>
+<CascadingValue Value="@Message" Name="message">
+    <CascadingValue Value="luckyNumber" Name="luckyNumber">
+
+    <LearningBlazor.Components.Pages.Learn.LearnBlazorComponent._ChildComponent Title="the message" OnButtonClick="ShowMessage">
+    </LearningBlazor.Components.Pages.Learn.LearnBlazorComponent._ChildComponent >
+    </CascadingValue>
+
+</CascadingValue>
+
+@code {
+    public string Message = "defalut message";
+    public string luckyNumber = "55";
+    private void ShowMessage(){
+        Message = "button has been clicked";
+    }
+}
