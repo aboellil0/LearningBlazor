@@ -1,16 +1,22 @@
 ﻿<input type="button" class="btn btn-danger" value="Delete" @onclick="ProductDeleted" />
 
 @code{
-   [Parameter]
-   public int ProductId { get; set; }
+  [Parameter]
+  public int ProductId { get; set; }
 
+  [Parameter]
+  public EventCallback<(int id, bool isDeleted)> OnProductDeleted { get; set; }
 
-    [Parameter]
-    public EventCallback<(int id, bool isDeleted)> OnProductDeleted { get; set; }
+  [Inject]
+  private IJSRuntime JSRuntime { get; set; } = default!;
 
-   private async Task ProductDeleted(MouseEventArgs args)
-   {
-           await OnProductDeleted.InvokeAsync((ProductId, true));
-      
-   }
+  private async Task ProductDeleted(MouseEventArgs args)
+  {
+      bool isConfirmed = await JSRuntime.InvokeAsync<bool>("confirm", new object[] { "Are you sure you want to delete this product?" });
+      if (isConfirmed)
+      {
+          // If confirmed, invoke the delete callback
+          await OnProductDeleted.InvokeAsync((ProductId, true));
+      }
+  }
 }
