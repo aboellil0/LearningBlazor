@@ -1,0 +1,52 @@
+﻿@inject NavigationManager _navigationManager
+@using Microsoft.AspNetCore.WebUtilities
+
+@* @page "/learnRouting/{message}/{message2}" *@
+@* @page "/learnRouting/{message}" *@
+@page "/learnRouting"
+@page "/learnRouting/catchall/{*AllMessages}"
+
+
+<h3>LearnRouting</h3>
+
+<h6>message: @message</h6>
+<h6>message2: @message2</h6>
+
+
+@* <a href="learnRouting?message=learn&message2=blazor"> *@
+@*     Learn Blazor *@
+@* </a> *@
+
+<button class="btn btn-secondary" @onclick="NavigateToQueryParameters">Navigate to query parameters</button>
+<button class="btn btn-primary" @onclick="loadParameters">Load messages</button>
+<button class="btn btn-outline-success" @onclick="refresh">>Refresh</button>
+<div class="card bg-danger" style="height:1700px">
+    a
+</div>
+<p id="scrollFor"> item to scroll down for</p>
+
+@code {
+    [SupplyParameterFromQuery(Name = "message")]
+    public string message { get; set; } = "defalut message 1";
+    [SupplyParameterFromQuery(Name = "message2")]
+    public string message2 { get; set; } = "defalut message 2";
+    [Parameter]
+    public string AllMessages { get; set; }
+
+    private void loadParameters()
+    {
+        var uri = _navigationManager.ToAbsoluteUri(_navigationManager.Uri);
+        var query = QueryHelpers.ParseQuery(uri.Query);
+        
+            message = query["message"];
+       
+            message2 = query["message2"];
+    }
+    
+    private void NavigateToQueryParameters(){
+        _navigationManager.NavigateTo($"learnRouting?message=asdf&message2=asdfadsf");
+    }
+    private void refresh(){
+        _navigationManager.Refresh(forceReload: true);
+    }
+}
