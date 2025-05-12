@@ -1,0 +1,379 @@
+﻿@page "/eventHome"
+
+<div class="event-booking-container w-100">
+    <nav class="navbar">
+        <div class="logo">
+            <div class="logo-circle"></div>
+        </div>
+        <div class="nav-links">
+            <a href="#" class="nav-link">Home</a>
+            <a href="#" class="nav-link">Events</a>
+            <a href="#" class="nav-link">About</a>
+        </div>
+        <div class="auth">
+            <a href="#" class="sign-in">Sign in</a>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="left-content">
+            <h1 class="title">Event Booking System</h1>
+            <p class="subtitle">Book your tickets for concerts, conferences, and more.</p>
+            <button class="book-now-btn">Book Now</button>
+
+            <div class="react-logo">
+                <img src="/images/react-logo.svg" alt="React Logo" />
+            </div>
+        </div>
+
+        <div class="right-content">
+            <div class="illustration">
+                <div class="ticket">
+                    <div class="star-icon"></div>
+                    <div class="ticket-lines">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                </div>
+                <div class="person">
+                    <div class="laptop"></div>
+                </div>
+            </div>
+
+            <div class="calendar">
+                <h3 class="calendar-title">April 2024</h3>
+                <div class="calendar-grid">
+                    <div class="calendar-header">
+                        <div class="day-name">Su</div>
+                        <div class="day-name">Mo</div>
+                        <div class="day-name">Tu</div>
+                        <div class="day-name">We</div>
+                        <div class="day-name">Th</div>
+                        <div class="day-name">Fr</div>
+                        <div class="day-name">Sa</div>
+                    </div>
+                    <div class="calendar-days">
+                        @foreach (var day in GetCalendarDays())
+                        {
+                            if (day == 0)
+                            {
+                                <div class="day empty"></div>
+                            }
+                            else if (day == 15)
+                            {
+                                <div class="day selected">@day</div>
+                            }
+                            else
+                            {
+                                <div class="day">@day</div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="decorative-elements">
+        <div class="circle top-right"></div>
+        <div class="circle bottom-left"></div>
+    </div>
+</div>
+
+<style>
+    /* Global styles */
+    :root {
+        --primary-purple: #6c47ff;
+        --primary-blue: #42d7f5;
+        --yellow: #ffc82c;
+        --pink-bg: #ffcfd8;
+        --dark-text: #212121;
+        --purple-pants: #7d4cdb;
+        --yellow-shoes: #ffbb00;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #ffffff;
+        color: var(--dark-text);
+    }
+
+    .event-booking-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Navigation styles */
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 0;
+    }
+
+    .logo-circle {
+        width: 40px;
+        height: 40px;
+        background-color: var(--yellow);
+        border-radius: 50%;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 40px;
+    }
+
+    .nav-link {
+        text-decoration: none;
+        color: var(--dark-text);
+        font-weight: 500;
+        font-size: 18px;
+    }
+
+    .sign-in {
+        text-decoration: none;
+        color: var(--dark-text);
+        font-weight: 500;
+        font-size: 18px;
+    }
+
+    /* Content styles */
+    .content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 50px;
+        position: relative;
+    }
+
+    .left-content {
+        flex: 1;
+        position: relative;
+        z-index: 2;
+    }
+
+    .title {
+        font-size: 60px;
+        font-weight: 800;
+        line-height: 1.1;
+        margin: 0 0 20px 0;
+    }
+
+    .subtitle {
+        font-size: 24px;
+        margin-bottom: 40px;
+    }
+
+    .book-now-btn {
+        background-color: var(--primary-purple);
+        color: white;
+        border: none;
+        border-radius: 30px;
+        padding: 15px 40px;
+        font-size: 22px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .book-now-btn:hover {
+        background-color: #5739d6;
+        transform: translateY(-2px);
+    }
+
+    .react-logo {
+        position: absolute;
+        bottom: -30px;
+        left: 30%;
+        width: 120px;
+        height: 120px;
+        z-index: 1;
+    }
+
+    .react-logo img {
+        width: 100%;
+        height: auto;
+    }
+
+    /* Right content styles */
+    .right-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    .illustration {
+        position: relative;
+        width: 100%;
+        height: 400px;
+    }
+
+    .person {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        background-color: var(--pink-bg);
+        border-radius: 50%;
+        right: 0;
+        top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .ticket {
+        position: absolute;
+        width: 150px;
+        height: 100px;
+        background-color: white;
+        border: 2px solid var(--dark-text);
+        border-radius: 10px;
+        top: 100px;
+        right: 220px;
+        z-index: 3;
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .star-icon {
+        width: 30px;
+        height: 30px;
+        background-color: #ff6b6b;
+        clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        margin-bottom: 10px;
+    }
+
+    .ticket-lines {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .line {
+        height: 8px;
+        background-color: #ffe0e0;
+        border-radius: 4px;
+    }
+
+    /* Calendar styles */
+    .calendar {
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        width: 320px;
+        position: absolute;
+        right: 20px;
+        bottom: -50px;
+    }
+
+    .calendar-title {
+        font-size: 22px;
+        margin: 0 0 15px 0;
+        text-align: center;
+    }
+
+    .calendar-grid {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .calendar-header {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 5px;
+        margin-bottom: 10px;
+    }
+
+    .day-name {
+        text-align: center;
+        font-weight: 500;
+        font-size: 14px;
+    }
+
+    .calendar-days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 5px;
+    }
+
+    .day {
+        width: 35px;
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        border-radius: 50%;
+    }
+
+    .day.selected {
+        background-color: var(--primary-purple);
+        color: white;
+    }
+
+    .day.empty {
+        visibility: hidden;
+    }
+
+    /* Decorative elements */
+    .decorative-elements {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+    }
+
+    .circle {
+        position: absolute;
+        border-radius: 50%;
+    }
+
+    .circle.top-right {
+        width: 60px;
+        height: 60px;
+        background-color: var(--primary-purple);
+        right: 150px;
+        top: 400px;
+    }
+
+    .circle.bottom-left {
+        width: 40px;
+        height: 40px;
+        background-color: var(--yellow);
+        left: 150px;
+        bottom: 50px;
+    }
+</style>
+
+@code {
+    private int[] GetCalendarDays()
+    {
+        // This is a simplified method for the demo
+        // In a real application, you would calculate actual days
+        var days = new List<int>();
+
+        // Add empty days for proper alignment (first day starts on Monday in April 2024)
+        for (int i = 0; i < 1; i++)
+        {
+            days.Add(0);
+        }
+
+        // Add the days of the month
+        for (int i = 1; i <= 30; i++)
+        {
+            days.Add(i);
+        }
+
+        return days.ToArray();
+    }
+}

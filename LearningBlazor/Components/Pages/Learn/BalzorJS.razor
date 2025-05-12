@@ -1,0 +1,19 @@
+﻿@page "/balzorjs"
+@inject IJSRuntime _JSRuntime
+<h3>BalzorJS</h3>
+
+<div class="row">
+    <button class="btn btn-secondary" @onclick="TestComfierm" >Comfirm Button</button>
+</div>
+
+@if (IsComfermed){
+    <p>the test has been comfermed</p>
+}
+
+@code {
+    private string ComfiermMessage = "are u sure that u want to delete this";
+    private bool IsComfermed;
+    private async Task TestComfierm(){
+        IsComfermed = await _JSRuntime.InvokeAsync<bool>("confirm", ComfiermMessage);
+    } 
+}
